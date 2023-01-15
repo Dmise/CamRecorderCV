@@ -17,12 +17,7 @@ namespace CameraRecorderCV
         private string _codec;        
         private Settings _settings = new Settings();
         private Recorder _recorder = new Recorder();
-        
-        public EventHandler _onRefresh;
-        public delegate void UIRefresher();
-        public event UIRefresher OnRefresh;             
-        
-
+                      
         public Form1()
         {
             InitializeComponent();
@@ -30,8 +25,31 @@ namespace CameraRecorderCV
             InitializeComponentForm();
             
             _settings.InitFromFile();
-            _recorder.NewFrame += HndRefresh;
+            _recorder.NewFrame += HndRefreshImage;
+            _recorder.UpdateStatus += UIRefresh;
             
+        }
+
+        private void UIRefresh(object sender, EventArgs args)
+        {
+            
+            if (_recorder.dutyRecording)
+            {
+                labShowDutyVideoStatus.Text = "Recording";
+            }
+            else
+            {
+                labShowDutyVideoStatus.Text = "Idle";
+            }
+
+            if(_recorder.fragmentRecording)
+            {
+                labShowFragmentVideoStatus.Text = "Recording";
+            }
+            else
+            {
+                labShowFragmentVideoStatus.Text = "Idle";
+            }
         }
 
         private void InitializeComponentForm()
@@ -108,13 +126,13 @@ namespace CameraRecorderCV
 
         private void btnStop_Click(object sender, EventArgs e)
         {            
-            _recorder.Stop();
+            _recorder.StopDuty();
             this.pictureBox1.Image.Dispose();
             this.pictureBox1.Image = null;
             DetectCameras();
         }
        
-        private void HndRefresh(Bitmap btmp)
+        private void HndRefreshImage(Bitmap btmp)
         {
             pictureBox1.Image = btmp;
             //pictureBox1.Refresh();
@@ -127,6 +145,18 @@ namespace CameraRecorderCV
             _settings.saveTo = fbd.SelectedPath;
             tbSaveTo.Text = _settings.saveTo;
             _settings.SaveToFile();
+        }
+
+        private void btnStartFragment_Click(object sender, EventArgs e)
+        {
+            var stngs = RecordSettings;
+            stngs.isDuty = false;
+            _recorder.Start(stngs);
+        }
+
+        private void btnStopFragment_Click(object sender, EventArgs e)
+        {
+            _recorder.StopFragment();
         }
     }
 }

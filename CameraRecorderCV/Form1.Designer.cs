@@ -43,12 +43,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.labStatusDuty = new System.Windows.Forms.Label();
+            this.labStatusFragment = new System.Windows.Forms.Label();
+            this.labShowDutyVideoStatus = new System.Windows.Forms.Label();
+            this.labShowFragmentVideoStatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartDuty
             // 
-            this.btnStartDuty.Location = new System.Drawing.Point(132, 126);
+            this.btnStartDuty.Location = new System.Drawing.Point(132, 125);
             this.btnStartDuty.Name = "btnStartDuty";
             this.btnStartDuty.Size = new System.Drawing.Size(94, 29);
             this.btnStartDuty.TabIndex = 0;
@@ -75,9 +79,9 @@
             // 
             // tbSaveTo
             // 
-            this.tbSaveTo.Location = new System.Drawing.Point(92, 72);
+            this.tbSaveTo.Location = new System.Drawing.Point(92, 68);
             this.tbSaveTo.Name = "tbSaveTo";
-            this.tbSaveTo.Size = new System.Drawing.Size(290, 27);
+            this.tbSaveTo.Size = new System.Drawing.Size(544, 27);
             this.tbSaveTo.TabIndex = 3;
             this.tbSaveTo.Click += new System.EventHandler(this.tbSaveTo_Click);
             // 
@@ -93,7 +97,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(27, 174);
+            this.pictureBox1.Location = new System.Drawing.Point(27, 193);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(640, 480);
             this.pictureBox1.TabIndex = 5;
@@ -101,7 +105,7 @@
             // 
             // btnStopDuty
             // 
-            this.btnStopDuty.Location = new System.Drawing.Point(232, 126);
+            this.btnStopDuty.Location = new System.Drawing.Point(232, 125);
             this.btnStopDuty.Name = "btnStopDuty";
             this.btnStopDuty.Size = new System.Drawing.Size(94, 29);
             this.btnStopDuty.TabIndex = 6;
@@ -150,47 +154,87 @@
             this.label1.Enabled = false;
             this.label1.Location = new System.Drawing.Point(27, 111);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(312, 55);
+            this.label1.Size = new System.Drawing.Size(320, 75);
             this.label1.TabIndex = 7;
             // 
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(356, 111);
+            this.label2.Location = new System.Drawing.Point(372, 111);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(356, 55);
+            this.label2.Size = new System.Drawing.Size(330, 75);
             this.label2.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(503, 126);
+            this.button1.Location = new System.Drawing.Point(503, 125);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 0;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnStart_Click);
+            this.button1.Click += new System.EventHandler(this.btnStartFragment_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(603, 126);
+            this.button2.Location = new System.Drawing.Point(603, 125);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 29);
             this.button2.TabIndex = 6;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnStop_Click);
+            this.button2.Click += new System.EventHandler(this.btnStopFragment_Click);
+            // 
+            // labStatusDuty
+            // 
+            this.labStatusDuty.AutoSize = true;
+            this.labStatusDuty.Location = new System.Drawing.Point(36, 161);
+            this.labStatusDuty.Name = "labStatusDuty";
+            this.labStatusDuty.Size = new System.Drawing.Size(52, 20);
+            this.labStatusDuty.TabIndex = 4;
+            this.labStatusDuty.Text = "Status:";
+            // 
+            // labStatusFragment
+            // 
+            this.labStatusFragment.AutoSize = true;
+            this.labStatusFragment.Location = new System.Drawing.Point(375, 161);
+            this.labStatusFragment.Name = "labStatusFragment";
+            this.labStatusFragment.Size = new System.Drawing.Size(52, 20);
+            this.labStatusFragment.TabIndex = 4;
+            this.labStatusFragment.Text = "Status:";
+            // 
+            // labShowDutyVideoStatus
+            // 
+            this.labShowDutyVideoStatus.AutoSize = true;
+            this.labShowDutyVideoStatus.Location = new System.Drawing.Point(94, 161);
+            this.labShowDutyVideoStatus.Name = "labShowDutyVideoStatus";
+            this.labShowDutyVideoStatus.Size = new System.Drawing.Size(34, 20);
+            this.labShowDutyVideoStatus.TabIndex = 8;
+            this.labShowDutyVideoStatus.Text = "idle";
+            // 
+            // labShowFragmentVideoStatus
+            // 
+            this.labShowFragmentVideoStatus.AutoSize = true;
+            this.labShowFragmentVideoStatus.Location = new System.Drawing.Point(433, 161);
+            this.labShowFragmentVideoStatus.Name = "labShowFragmentVideoStatus";
+            this.labShowFragmentVideoStatus.Size = new System.Drawing.Size(34, 20);
+            this.labShowFragmentVideoStatus.TabIndex = 8;
+            this.labShowFragmentVideoStatus.Text = "idle";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(802, 685);
+            this.Controls.Add(this.labShowFragmentVideoStatus);
+            this.Controls.Add(this.labShowDutyVideoStatus);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnStopDuty);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.labFragment);
+            this.Controls.Add(this.labStatusFragment);
+            this.Controls.Add(this.labStatusDuty);
             this.Controls.Add(this.labDuty);
             this.Controls.Add(this.labSaveTo);
             this.Controls.Add(this.tbSaveTo);
@@ -227,5 +271,9 @@
         private Label label2;
         private Button button1;
         private Button button2;
+        private Label labStatusDuty;
+        private Label labStatusFragment;
+        private Label labShowDutyVideoStatus;
+        private Label labShowFragmentVideoStatus;
     }
 }
