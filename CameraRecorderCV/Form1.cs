@@ -1,5 +1,8 @@
 using Emgu.CV;
 using Emgu.CV.Structure;
+// using Emgu.Util;
+// using Emge.CV.Util;
+
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
@@ -19,6 +22,7 @@ namespace CameraRecorderCV
         public delegate void UIRefresher();
         public event UIRefresher OnRefresh;             
         
+
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +30,8 @@ namespace CameraRecorderCV
             InitializeComponentForm();
             
             _settings.InitFromFile();
-            OnRefresh += HndRefresh;
+            _recorder.NewFrame += HndRefresh;
+            
         }
 
         private void InitializeComponentForm()
@@ -41,8 +46,10 @@ namespace CameraRecorderCV
 
         void DetectCameras()
         {
+            camerasList.Clear();
+            cmbCameras.Items.Clear();
             int counter = 0;
-            for (int i = 0; i <= 20; i++)
+            for (int i = 0; i <= 10; i++)
             {
                 try
                 {
@@ -69,10 +76,17 @@ namespace CameraRecorderCV
         }
 
         private void btnStart_Click(object sender, EventArgs e)
-        {          
-            var stngs = RecordSettings;
-            stngs.isDuty = true;
-            _recorder.Start(stngs);
+        {
+            try
+            {
+                var stngs = RecordSettings;
+                stngs.isDuty = true;
+                _recorder.Start(stngs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"Exception", MessageBoxButtons.OK ,MessageBoxIcon.Error);
+            }
         }
         
         private RecordSettings RecordSettings
@@ -86,6 +100,7 @@ namespace CameraRecorderCV
                 
                 // get camera
                 var index = cmbCameras.SelectedIndex;
+                 
                 settings.videoCapture = camerasList[index];
                 return settings;
             }
@@ -93,12 +108,16 @@ namespace CameraRecorderCV
 
         private void btnStop_Click(object sender, EventArgs e)
         {            
-            _recorder.Stop(); 
+            _recorder.Stop();
+            this.pictureBox1.Image.Dispose();
+            this.pictureBox1.Image = null;
+            DetectCameras();
         }
        
-        private void HndRefresh()
+        private void HndRefresh(Bitmap btmp)
         {
-            pictureBox1.Refresh();
+            pictureBox1.Image = btmp;
+            //pictureBox1.Refresh();
         }
    
         private void tbSaveTo_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
@@ -15,71 +16,93 @@ namespace CameraRecorderCV
     
     internal class Recorder
     {
-        private VideoWriter _vwriter;
-        private VideoCapture _capture;
-        private int fourcc = VideoWriter.Fourcc('m', 'p', '4', 'v'); // mpg4
+        private VideoWriter? _vwriter;
+        private VideoCapture? _capture;        
+        private int fourcc = FourCC.MP4V;
+        private Mat mat = new Mat();
+        private int fps = 24;
+        
         public delegate void Frame(Bitmap btm);
-        public event Frame NewFrame;
-        public CancellationToken _recordToken = new CancellationToken();
-        public void Start(RecordSettings a)
-        {
-            Task.Run(() => StartRecord(a));
-        }
-        private async void StartRecord(RecordSettings settings)
-        {
-            var size = ResolutionInfo.GetSize(settings.resolution);
-            _capture = settings.videoCapture;
-            var filename = Path.Combine(settings.folderPath,GetFileName());
+        public event Frame NewFrame;     
+        
+        public void Start(RecordSettings settings)
+        {                   
             try
             {
-                var size1 = new Size(width: 480, height: 640);
-                _vwriter = new VideoWriter(filename, fourcc, 24, size, true);
-                //_vwriter = new VideoWriter(filename, 24, size1, true);
+                // create/init videoWriter
+                var size = ResolutionInfo.GetSize(settings.resolution);
+                
+
+                _capture = settings.videoCapture;
+                _capture.Set(CapProp.FourCC, fourcc);
+
+                // if more that webcam resolution set to webcam max
+                _capture.Set(CapProp.FrameHeight, size.Height); 
+                _capture.Set(CapProp.FrameWidth, size.Width);
+                //_capture.Set(CapProp.Fps, fps);
+                //_capture.Set(CapProp.XiWidth, size.Width);
+                //_capture.Set(CapProp.XiHeight, size.Height);
+
+                // set size as on the webcam
+                size.Width = _capture.Width;
+                size.Height = _capture.Height;
+                var filename = Path.Combine(settings.folderPath, GetFileName());
+                _vwriter = new VideoWriter(filename, fourcc, fps, size, true);
+
+                _capture.Start();
+                _capture.ImageGrabbed += _capture_ImageGrabbed;
             }
-            catch (NullReferenceException nrx)
+            catch (NullReferenceException ex)
             {
-                throw nrx;
+                throw;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
-
-            while (!_recordToken.IsCancellationRequested)
+        }
+       
+        private void _capture_ImageGrabbed(object? sender, EventArgs e)
+        {
+            _capture.Retrieve(mat);            
+            
+            if (_vwriter != null)
             {
-                try
-                {
-                    var queryframe = _capture.QueryFrame();
-                    var imageCv = queryframe.ToImage<Bgr, Byte>();
-
-                    var bitmap = new Bitmap(queryframe.Width,
-                                            queryframe.Height,
-                                            queryframe.Step,
-                                            PixelFormat.Format24bppRgb,
-                                            queryframe.DataPointer);
-                    if (_vwriter.IsOpened)
-                    {
-                        _vwriter.Write(queryframe);
-                    }
-                    if (NewFrame != null)
-                    {
-                        NewFrame.Invoke(bitmap);
-                    }
-                }
-            }
+                _vwriter.Write(mat);                
+            }            
+           NewFrame.Invoke(mat.ToImage<Bgr, byte>().Flip(FlipType.Horizontal).ToBitmap());
         }
 
         public void Stop() 
-        { 
-            _recordToken.ThrowIfCancellationRequested();
-            _capture.Stop();  
-            _capture.Dispose();
-            _vwriter.Dispose();
+        {
+            try {
+                _capture.ImageGrabbed -= _capture_ImageGrabbed;
+                _vwriter.Dispose();
+                _vwriter = null;
+                _capture.Pause();
+                _capture.Stop();
+                _capture.Dispose();
+                //_capture = null;
+                //
+            }
+            catch (Exception ex) { }
         }
 
         private string GetFileName()
         {
             return "duty.mp4";
+        }
+    }
+
+    class Converter
+    {
+        public static Bitmap MatToBitmap(Mat mat)
+        {
+            return new Bitmap(mat.Width,
+                              mat.Height,
+                              mat.Step,
+                              PixelFormat.Format24bppRgb,
+                              mat.DataPointer);
         }
     }
 }
