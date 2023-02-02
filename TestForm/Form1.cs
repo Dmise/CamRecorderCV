@@ -1,3 +1,4 @@
+using CameraRecordLib;
 using Emgu.CV;
 using Emgu.CV.Structure;
 // using Emgu.Util;
@@ -6,28 +7,23 @@ using Emgu.CV.Structure;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
-namespace CameraRecorderCV
+namespace TestForm
 {
     public partial class Form1 : Form
     {
         // private List<Dictionary<int, string>> camerasList = new List<Dictionary<int, string>>();
-        private List<VideoCapture> camerasList = new List<VideoCapture>();
-        
-        
-        private string _codec;        
-        private Settings _settings = new Settings();
-        private Recorder _recorder = new Recorder();
+        private List<VideoCapture> camerasList = new List<VideoCapture>();              
+        private string _codec;
+        private RecordManager _recorder = new RecordManager();       
                       
         public Form1()
         {
             InitializeComponent();
             DetectCameras();
-            InitializeComponentForm();
-            
-            _settings.InitFromFile();
+            InitializeFormData();            
+            _recorder.InitFromFile();
             _recorder.NewFrame += HndRefreshImage;
-            _recorder.UpdateStatus += UIRefresh;
-            
+            _recorder.UpdateStatus += UIRefresh;         
         }
 
         private void UIRefresh(object sender, EventArgs args)
@@ -52,14 +48,19 @@ namespace CameraRecorderCV
             }
         }
 
-        private void InitializeComponentForm()
-        {                   
-            cmbResolutions.Items.AddRange(ResolutionInfo.ResolutionList.ToArray());
-            this.cmbResolutions.SelectedIndex = 5;
-            
-            _settings.InitFromFile();
-            tbSaveTo.Text = _settings.saveTo;
-           
+        private void InitializeFormData()
+        {
+            try
+            {
+                cmbResolutions.Items.AddRange(ResolutionInfo.ResolutionList.ToArray());
+                this.cmbResolutions.SelectedIndex = 5;
+                _recorder.InitFromFile();
+                this.tbSaveTo.Text = _recorder.SaveTo;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         void DetectCameras()
@@ -97,9 +98,8 @@ namespace CameraRecorderCV
         {
             try
             {
-                var stngs = RecordSettings;
-                stngs.isDuty = true;
-                _recorder.Start(stngs);
+                GrabDataFromUI();
+                _recorder.Start(RecordType.Duty);
             }
             catch (Exception ex)
             {
@@ -107,23 +107,19 @@ namespace CameraRecorderCV
             }
         }
         
-        private RecordSettings RecordSettings
-        {
-            get
-            {
-                var settings = new RecordSettings();
-                settings.resolution = (Resolution)cmbResolutions.SelectedItem;
-                settings.fourcc = -1;
-                settings.folderPath = tbSaveTo.Text;
+        /// <summary>
+        /// Grab fields value from UI to setup Settings
+        /// </summary>
+        private void GrabDataFromUI()
+        {                       
+            _recorder.RecordSettings.resolution = (Resolution)cmbResolutions.SelectedItem;               
+            _recorder.RecordSettings.SaveTo = tbSaveTo.Text;
                 
-                // get camera
-                var index = cmbCameras.SelectedIndex;
-                 
-                settings.videoCapture = camerasList[index];
-                return settings;
-            }
+            // get camera
+            var index = cmbCameras.SelectedIndex;                 
+            _recorder.VideoCapture = camerasList[index];           
         }
-
+      
         private void btnStop_Click(object sender, EventArgs e)
         {            
             _recorder.StopDuty();
@@ -142,16 +138,14 @@ namespace CameraRecorderCV
         {
             var fbd = new FolderBrowserDialog();
             fbd.ShowDialog();
-            _settings.saveTo = fbd.SelectedPath;
-            tbSaveTo.Text = _settings.saveTo;
-            _settings.SaveToFile();
+            _recorder.SaveTo = fbd.SelectedPath;
+            tbSaveTo.Text = _recorder.SaveTo;
+            _recorder.SaveToFile();
         }
 
         private void btnStartFragment_Click(object sender, EventArgs e)
-        {
-            var stngs = RecordSettings;
-            stngs.isDuty = false;
-            _recorder.Start(stngs);
+        {                        
+            _recorder.Start(RecordType.Fragment);
         }
 
         private void btnStopFragment_Click(object sender, EventArgs e)

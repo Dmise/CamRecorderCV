@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CameraRecorderCV
+namespace CameraRecordLib
 {
+    /// <summary>
+    /// Compression codes
+    /// </summary>
     public class FourCC
     {
         /// <summary>

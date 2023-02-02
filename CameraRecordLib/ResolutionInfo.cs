@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CameraRecorderCV
+namespace CameraRecordLib
 {
-    internal class Resolution
+    public static class ResolutionInfo
     {
-        internal int Widht;
-        internal int Height;
-
-        public override string ToString()
-        {
-            float ratioF = (float)Widht / (float)Height;
-            var ratio = (Math.Round(ratioF, 2) == 1.78) ? "16:9" : "4:3";
-            return $"{Widht}x{Height} ({ratio})";
-        }
-    }
-
-
-    internal class ResolutionInfo
-    {
-        internal enum ResolutionEnum
+        public enum ResolutionEnum
         {
             _640_480,
             _1024_768,
@@ -52,13 +39,15 @@ namespace CameraRecorderCV
             new Resolution{ Height = 1080, Widht = 1920},
         };
 
-        public static Size GetSize(Resolution resol)
+        /// <summary>
+        /// Resolution to Size
+        /// </summary>
+        /// <param name="resol"></param>
+        /// <returns></returns>
+        public static Size ResolutionToSize(Resolution resol)
         {
             return new Size() { Height = resol.Height, Width = resol.Widht };
         }
 
     }
-    
-    
- 
 }

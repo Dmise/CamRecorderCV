@@ -1,4 +1,4 @@
-﻿namespace CameraRecorderCV
+﻿namespace TestForm
 {
     partial class Form1
     {
