@@ -140,7 +140,9 @@ namespace TestForm
             fbd.ShowDialog();
             _recorder.SaveTo = fbd.SelectedPath;
             tbSaveTo.Text = _recorder.SaveTo;
-            _recorder.SaveToFile();
+            
+                     
+            _recorder.SaveToFile(_recorder.SaveTo);
         }
 
         private void btnStartFragment_Click(object sender, EventArgs e)

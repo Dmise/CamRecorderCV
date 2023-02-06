@@ -11,18 +11,18 @@ namespace CameraRecordLib
     /// </summary>
     public class NameBuilder
     {
-        private static string format = ".mp4";
-        public static string GetDutyVideoName()
+        
+        public static string GetDutyVideoName(string suffix = ".mp4")
         {
             var date = DateTime.Now;
-            return date.Day + "_" + date.Month + "_" + "duty_" + date.Hour + format;
+            return date.Day + "_" + date.Month + "_" + "duty_" + date.Hour + "_" + date.Minute + suffix;
            
         }
 
-        public static string GetFragmentVideoName()
+        public static string GetFragmentVideoName(string suffix = ".mp4")
         {
             var date = DateTime.Now;
-            return date.Day + "_" + date.Month + "_" + "frag_" + date.Hour + "_" + date.Minute + "_" + date.Second + format;
+            return date.Day + "_" + date.Month + "_" + "frag_" + date.Hour + "_" + date.Minute + "_" + date.Second + suffix;
         }
     }
 }

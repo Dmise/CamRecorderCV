@@ -8,8 +8,7 @@ namespace CameraRecordLib
 {
     public interface IRecordManager
     {
-        public string SaveTo { get; set; }
-        public void InitFromFile();
+        public string SaveTo { get; set; }      
         public void Start(RecordType type); 
 
     }

@@ -217,12 +217,12 @@ namespace CameraRecordLib
         public static int MP2A = 1093816397;
         public static int MP2T = 1412583501;
         public static int MP2V = 1446137933;
-        public static int MP42 = 842289229;
+        public const int MP42 = 842289229;
         public static int MP43 = 859066445;
         public static int MP4A = 1093947469;
         public static int MP4S = 1395937357;
         public static int MP4T = 1412714573;
-        public static int MP4V = 1446269005;
+        public const int MP4V = 1446269005;
         public static int MPEG = 1195724877;
         public static int MPG4 = 877088845;
         public static int MPGI = 1229410381;
@@ -385,7 +385,7 @@ namespace CameraRecordLib
         public static int X264 = 875967064;
         public static int XLV0 = 810962008;
         public static int XMPG = 1196445016;
-        public static int XVID = 1145656920;
+        public const int XVID = 1145656920;
         public static int XWV0 = 810964824;
         public static int XWV1 = 827742040;
         public static int XWV2 = 844519256;

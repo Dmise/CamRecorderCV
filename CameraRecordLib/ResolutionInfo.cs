@@ -21,22 +21,22 @@ namespace CameraRecordLib
 
         public static Dictionary<ResolutionEnum, Resolution> ResolutionDict = new Dictionary<ResolutionEnum, Resolution>()
         {
-            { ResolutionEnum._640_480, new Resolution{ Height = 480, Widht = 640} },
-            { ResolutionEnum._1024_768, new Resolution{ Height = 768, Widht = 1024} },
-            { ResolutionEnum._1280_960, new Resolution{ Height = 960, Widht = 1280 } },
-            { ResolutionEnum._1600_1200, new Resolution{ Height = 1200, Widht = 1600} },
-            { ResolutionEnum._1280_720_169, new Resolution{ Height = 720, Widht = 1280} },
-            { ResolutionEnum._1920_1080_169, new Resolution{ Height = 1080, Widht = 1920} },
+            { ResolutionEnum._640_480, new Resolution{ Height = 480, Width = 640} },
+            { ResolutionEnum._1024_768, new Resolution{ Height = 768, Width = 1024} },
+            { ResolutionEnum._1280_960, new Resolution{ Height = 960, Width = 1280 } },
+            { ResolutionEnum._1600_1200, new Resolution{ Height = 1200, Width = 1600} },
+            { ResolutionEnum._1280_720_169, new Resolution{ Height = 720, Width = 1280} },
+            { ResolutionEnum._1920_1080_169, new Resolution{ Height = 1080, Width = 1920} },
         };
 
         public static List<Resolution> ResolutionList = new List<Resolution>()
         {
-            new Resolution{ Height = 480, Widht = 640},
-            new Resolution{ Height = 768, Widht = 1024},
-            new Resolution{ Height = 960, Widht = 1280},
-            new Resolution{ Height = 1200, Widht = 1600},
-            new Resolution{ Height = 720, Widht = 1280},
-            new Resolution{ Height = 1080, Widht = 1920},
+            new Resolution{ Height = 480, Width = 640},
+            new Resolution{ Height = 768, Width = 1024},
+            new Resolution{ Height = 960, Width = 1280},
+            new Resolution{ Height = 1200, Width = 1600},
+            new Resolution{ Height = 720, Width= 1280},
+            new Resolution{ Height = 1080, Width = 1920},
         };
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace CameraRecordLib
         /// <returns></returns>
         public static Size ResolutionToSize(Resolution resol)
         {
-            return new Size() { Height = resol.Height, Width = resol.Widht };
+            return new Size() { Height = resol.Height, Width = resol.Width };
         }
 
     }

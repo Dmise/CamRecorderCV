@@ -20,6 +20,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+    <PackageReference Include="NLog" Version="5.1.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.1" />
+    <ProjectReference Include="..\AdInfinitum\AdInfinitum.Logging\AdInfinitum.Logging.csproj" />
     <ProjectReference Include="..\CameraRecordLib\CameraRecordLib.csproj" />
   </ItemGroup>
 </Project>

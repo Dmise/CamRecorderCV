@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace CameraRecordLib
 {
@@ -15,37 +17,8 @@ namespace CameraRecordLib
     /// </summary>
     public class Settings
     {        
-        public string saveTo;
+        public string SaveTo { get; set; }
 
-        public Resolution resolution;
-
-        /// <summary>
-        /// Init class from txt file
-        /// </summary> 
-        /// <param name="filename">file should be in the same directory with exe</param>
-        public void InitFromFile(string filename = "settings.json")
-        {
-            var text = File.ReadAllText(filename);
-            var set = JsonConvert.DeserializeObject<Settings>(text);
-            if (set != null)
-            {
-                saveTo = set.saveTo;
-                resolution = set.resolution;
-            }
-            else
-            {
-                throw new DataException("Did not recognize Setting class from json settings file");
-            }
-        }
-
-        public void SaveToFile(string filename = "settings.json")
-        {
-            var json = JsonConvert.SerializeObject(this);
-            File.WriteAllText(filename, String.Empty);
-            using (StreamWriter sw = new StreamWriter(filename, false))
-            {
-                sw.WriteLine(json);
-            }
-        }
+        public Resolution Resolution { get; set; }
     }
 }
