@@ -1,5 +1,6 @@
 ﻿using CameraRecordLib;
 using Emgu.CV;
+using Microsoft.Extensions.Options;
 using System.Threading;
 
 namespace VideoRecordService
@@ -11,10 +12,10 @@ namespace VideoRecordService
         
         private Timer _timer;
         
-        public Worker(ILogger<Worker> logger, RecordManager manager)                       
+        public Worker(ILogger<Worker> logger, RecordManager manager, IOptions<Settings> settings)                       
         {
             _logger = logger;             
-            _timer = new Timer(new TimerCallback(timerProcess), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));   
+            _timer = new Timer(new TimerCallback(timerProcess), null, TimeSpan.Zero, TimeSpan.FromMinutes(settings.Value.VideoLength));   
             _recordManager = manager;
         }
      

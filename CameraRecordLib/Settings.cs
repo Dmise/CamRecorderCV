@@ -20,5 +20,6 @@ namespace CameraRecordLib
         public string SaveTo { get; set; }
 
         public Resolution Resolution { get; set; }
+        public int VideoLength { get; set; }
     }
 }
