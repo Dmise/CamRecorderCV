@@ -24,9 +24,7 @@ namespace VideoRecordService
             // Проверка на наличие директории
             
             if (!Directory.Exists(_recordManager.SaveTo)) Directory.CreateDirectory(_recordManager.SaveTo);
-
             
-
             while (!stoppingToken.IsCancellationRequested)
             {
                                           

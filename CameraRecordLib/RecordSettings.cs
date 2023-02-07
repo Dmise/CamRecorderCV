@@ -11,9 +11,9 @@ namespace CameraRecordLib
 {
     public class RecordSettings
     {
-        
-        public int fourcc = FourCC.H264; // XVID -.avi . // MP4V = .mp4 // MP42 - .avi // IYUV  // H264 - .mp4
-                                        
+        // MJPG  create video as a serios of JPG(h264 for example) unlike MPEG-4 type
+        public int fourcc = FourCC.H264; // XVID -.avi . // MP4V = .mp4 // MP42 - .avi // IYUV  // H264 - .mp4 
+                    
         public Resolution resolution = ResolutionInfo.ResolutionDict[ResolutionInfo.ResolutionEnum._1920_1080_169];
         public RecordType recordType = RecordType.Duty;
         //public VideoCapture videoCapture;

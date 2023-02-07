@@ -78,7 +78,7 @@ namespace VideoRecordService
         public void Start(RecordType type)
         {
             try
-            {
+            {               
                 _logger.InfoLine("Start recording");
                 if (_dutyRecording)
                 {
@@ -94,15 +94,25 @@ namespace VideoRecordService
                     var fullFileName = SaveTo + filename;
                     var bid = GetBackEndId();
                     _logger.InfoLine($"try to create VideoWriter");
+                    
+                    // эти штуки крутил. на выходе видео всеравно жирное
+                    var vrset = new Tuple<VideoWriter.WriterProperty, int>[]
+                    {
+                        Tuple.Create(VideoWriter.WriterProperty.Quality, 50),
+                        Tuple.Create(VideoWriter.WriterProperty.Framebytes, 100),
+                        Tuple.Create(VideoWriter.WriterProperty.IsColor, 0),
+                        
+                    };
                     _videoWriter = new VideoWriter(fullFileName,
-                        bid,
+                        (int)VideoCapture.API.Ffmpeg, // Msmf - работает но не сжимает // при Any выбирает Ffmpeg // VFW - требует установить кодек
                         _recordSettings.fourcc,
                         _recordSettings.fps,
                         new Size { Width = _recordSettings.resolution.Width, Height = _recordSettings.resolution.Height },
-                        true);
+                        vrset);
                     _logger.InfoLine($"VideoWriterCreated");
                     
-                    _dutyRecording = true;                    
+                    _dutyRecording = true; 
+                    
                     _camera.ImageGrabbed += _capture_ImageGrabbed;
                 }
                 else
@@ -121,7 +131,8 @@ namespace VideoRecordService
                     _camera.Retrieve(mat);
                     if (_dutyRecording && _videoWriter != null)
                     {
-                        _videoWriter.Write(mat);                        
+                        _videoWriter.Write(mat);
+                    
                                                
                     }                          
             }
@@ -137,7 +148,7 @@ namespace VideoRecordService
                 {
                     _camera = capture;
                     
-                    _camera.Set(CapProp.FourCC, _recordSettings.fourcc);
+                    //_camera.Set(CapProp.FourCC, _recordSettings.fourcc);
                     _camera.Set(CapProp.Fps, _recordSettings.fps);
                     // if more that webcam resolution set to webcam max                
                     _camera.Set(CapProp.FrameHeight, _recordSettings.resolution.Height);
