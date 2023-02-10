@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdInfinitum.Logging", "AdIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdInfinitum.Exceptions", "AdInfinitum\AdInfinitum.Exceptions\AdInfinitum.Exceptions.csproj", "{7C18B44E-546C-4AA7-86D3-C1961AAA6D55}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdInfinitum.Processes", "AdInfinitum\AdInfinitum.Process\AdInfinitum.Processes.csproj", "{798BB857-A54E-42CC-A9FE-6A1C8233CF45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,12 @@ Global
 		{7C18B44E-546C-4AA7-86D3-C1961AAA6D55}.DebugWithoutGrd|Any CPU.Build.0 = DebugWithoutGrd|Any CPU
 		{7C18B44E-546C-4AA7-86D3-C1961AAA6D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C18B44E-546C-4AA7-86D3-C1961AAA6D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.DebugWithoutGrd|Any CPU.ActiveCfg = Debug|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.DebugWithoutGrd|Any CPU.Build.0 = Debug|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798BB857-A54E-42CC-A9FE-6A1C8233CF45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

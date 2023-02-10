@@ -23,6 +23,16 @@
     <PackageReference Include="NLog" Version="5.1.1" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.2.1" />
     <ProjectReference Include="..\AdInfinitum\AdInfinitum.Logging\AdInfinitum.Logging.csproj" />
+    <ProjectReference Include="..\AdInfinitum\AdInfinitum.Process\AdInfinitum.Processes.csproj" />
     <ProjectReference Include="..\CameraRecordLib\CameraRecordLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

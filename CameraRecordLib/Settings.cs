@@ -18,8 +18,11 @@ namespace CameraRecordLib
     public class Settings
     {        
         public string SaveTo { get; set; }
-
         public Resolution Resolution { get; set; }
         public int VideoLength { get; set; }
+        public string CameraName { get; set; }
+        public string FFmpegArgs { get; set; }
+        public string FFmpegBinPath { get; set;}
+      
     }
 }
